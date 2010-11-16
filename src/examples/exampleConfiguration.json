@@ -1,0 +1,37 @@
+{
+    'connections': {
+        'Primary': {
+            'port': 13731
+        }
+    },
+    'configurations': {
+        'Production': {
+            'databases': {
+                'Main': {
+                    'database': 'prod_db',
+                    'connection': 'Primary',
+                    'collections': {
+                        'Data': 'data'
+                    }
+                },
+                'Search': {
+                    'database': 'prod_search_db'
+                }
+            }
+        },
+        'Test': {
+            'databases': {
+                'Main': {
+                    'database': 'test_db',
+                    'connection': 'Primary',
+                    'collections': {
+                        'Data': 'data'
+                    }
+                },
+                'Search': {
+                    'database': 'test_search_db'
+                }
+            }
+        }
+    }
+}

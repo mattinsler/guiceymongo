@@ -1,0 +1,19 @@
+/* Represents a single person */
+data Person {
+
+	/* Color of eye */
+	enum EyeColor {
+		Blue,
+		Brown,
+		Green,
+		Hazel
+	}
+	
+	/* Full name */
+	string name;
+	
+	date birth_date;
+	
+	/* testing */
+	EyeColor eye_color;
+}

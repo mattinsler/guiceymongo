@@ -1,0 +1,12 @@
+data Vehicle {
+	enum VehicleMake {
+		BMW,
+		Lexus,
+		Audi,
+		Mercedes
+	}
+	
+	VehicleMake make;
+	string model;
+	int32 year;
+}
