@@ -46,12 +46,17 @@
 		<dependency>
 			<groupId>org.mongodb</groupId>
 			<artifactId>mongo-java-driver</artifactId>
-			<version>2.2</version>
+			<version>2.3</version>
 		</dependency>
 		<dependency>
 			<groupId>com.mattinsler</groupId>
 			<artifactId>guiceytools</artifactId>
 			<version>0.1</version>
+		</dependency>
+        <dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.16</version>
 		</dependency>
 
 		<dependency>

@@ -16,19 +16,20 @@
 
 package com.mattinsler.guiceymongo.guice.spi;
 
-import java.util.Map;
-
 import com.google.inject.Binder;
 import com.google.inject.Key;
 import com.google.inject.Module;
 import com.mattinsler.guiceymongo.guice.GuiceyMongoUtil;
+import com.mattinsler.guiceytools.ConfigureOnceModule;
+
+import java.util.Map;
 
 public class GuiceyMongoBinder {
 	private final Binder _binder;
 	
 	public GuiceyMongoBinder(Binder binder) {
 		_binder = binder.skipSources(GuiceyMongoBinder.class);
-		_binder.install(new SingletonModule<Class<GuiceyMongoUtil>>(GuiceyMongoUtil.class) {
+		_binder.install(new ConfigureOnceModule<Class<GuiceyMongoUtil>>(GuiceyMongoUtil.class) {
 			public void configure(Binder binder) {
 				binder.requestStaticInjection(GuiceyMongoUtil.class);
 			}

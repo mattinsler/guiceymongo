@@ -17,6 +17,7 @@
 package com.mattinsler.guiceymongo.guice.spi;
 
 import com.google.inject.*;
+import com.google.inject.util.Types;
 import com.mattinsler.guiceymongo.GuiceyCollection;
 import com.mattinsler.guiceymongo.data.DataWrapper;
 import com.mattinsler.guiceymongo.data.IsData;
@@ -30,7 +31,7 @@ public class GuiceyCollectionProviderModule<T extends IsData> extends ProviderMo
 	private Provider<DBCollection> _collectionProvider;
 
 	public GuiceyCollectionProviderModule(String collectionKey, Class<T> dataClass) {
-		super((Key<GuiceyCollection<T>>)Key.get(GuiceyCollection.class, AnnotationUtil.guiceyMongoCollection(collectionKey)));
+		super((Key<GuiceyCollection<T>>)Key.get(Types.newParameterizedType(GuiceyCollection.class, dataClass), AnnotationUtil.guiceyMongoCollection(collectionKey)));
 		_collectionKey = collectionKey;
 		_dataClass = dataClass;
 	}

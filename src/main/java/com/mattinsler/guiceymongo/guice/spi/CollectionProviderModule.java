@@ -16,16 +16,13 @@
 
 package com.mattinsler.guiceymongo.guice.spi;
 
-import com.google.inject.Binder;
-import com.google.inject.Inject;
-import com.google.inject.Injector;
-import com.google.inject.Key;
-import com.google.inject.Provider;
+import com.google.inject.*;
 import com.mattinsler.guiceymongo.guice.annotation.MongoCollection;
+import com.mattinsler.guiceytools.ProviderModule;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 
-class CollectionProviderModule extends SingletonModule<Key<DBCollection>> implements Provider<DBCollection> {
+class CollectionProviderModule extends ProviderModule<DBCollection> {
 	private final String _databaseKey;
 	
 	private Injector _injector;
