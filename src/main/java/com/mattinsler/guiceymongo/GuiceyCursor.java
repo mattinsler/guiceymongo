@@ -52,6 +52,11 @@ public class GuiceyCursor<Item extends IsData> implements Iterable<Item> {
 	public int count() {
 		return _cursor.count();
 	}
+
+    public GuiceyCursor<Item> snapshot() {
+        _cursor.snapshot();
+        return this;
+    }
 	
 	public GuiceyCursor<Item> limit(int number) {
         if (number > 0) {
