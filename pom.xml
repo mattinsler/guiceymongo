@@ -32,11 +32,11 @@
 	<distributionManagement>
 		<repository>
 			<id>repo</id>
-			<url>http://github.com/mattinsler/maven-repo/raw/master/releases</url>
+			<url>http://mattinsler.github.com/repository/releases</url>
 		</repository>
 		<snapshotRepository>
 			<id>snapshot-repo</id>
-			<url>http://github.com/mattinsler/maven-repo/raw/master/snapshots</url>
+			<url>http://mattinsler.github.com/repository/snapshots</url>
 		</snapshotRepository>
 	</distributionManagement>
 
