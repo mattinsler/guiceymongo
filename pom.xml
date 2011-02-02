@@ -4,7 +4,7 @@
 
 	<groupId>com.mattinsler</groupId>
 	<artifactId>guiceymongo</artifactId>
-	<version>0.2-SNAPSHOT</version>
+	<version>0.2</version>
 	<packaging>jar</packaging>
 
 	<name>guiceymongo</name>
@@ -69,7 +69,7 @@
 		<dependency>
 			<groupId>com.mattinsler</groupId>
 			<artifactId>guiceytools</artifactId>
-			<version>0.2-SNAPSHOT</version>
+			<version>0.2</version>
 		</dependency>
         <dependency>
 			<groupId>log4j</groupId>
