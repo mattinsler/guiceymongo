@@ -25,6 +25,7 @@ import com.mattinsler.guiceymongo.guice.annotation.MongoDatabase;
 import com.mattinsler.guiceytools.ProviderModule;
 import com.mongodb.DB;
 import com.mongodb.Mongo;
+import com.mongodb.MongoClient;
 import com.mongodb.MongoException;
 
 import java.net.UnknownHostException;
@@ -74,10 +75,10 @@ class DBProviderModule extends ProviderModule<DB> {
 			if (hostname == null)
 				hostname = "localhost";
 			if (port == null)
-				return new Mongo(hostname);
-			return new Mongo(hostname, port.intValue());
+				return new MongoClient(hostname);
+			return new MongoClient(hostname, port.intValue());
 		}
-		return new Mongo();
+		return new MongoClient();
 	}
 
 	private void cacheDB() throws MongoException, UnknownHostException {
