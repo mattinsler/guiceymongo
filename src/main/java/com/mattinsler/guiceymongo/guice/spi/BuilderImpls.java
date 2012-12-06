@@ -26,6 +26,10 @@ import com.mattinsler.guiceymongo.guice.spi.Builders.CollectionConfigurationOnly
 import com.mattinsler.guiceymongo.guice.spi.Builders.DatabaseConfiguration;
 import com.mattinsler.guiceymongo.guice.spi.Builders.DatabaseOptionConfiguration;
 import com.mattinsler.guiceymongo.guice.spi.Builders.FinishableConfiguration;
+import com.mongodb.ReadPreference;
+import com.mongodb.ServerAddress;
+
+import java.util.List;
 
 public final class BuilderImpls {
 	public static class Configuration implements Builders.Configuration, Builders.FinishableConfiguration {
@@ -133,11 +137,15 @@ public final class BuilderImpls {
 		}
 	}
 	
-	public static class Connection implements Builders.Connection, Builders.ConnectionWithHost, Builders.ConnectionWithPort {
+	public static class Connection implements Builders.Connection, Builders.ConnectionWithHost, Builders.ConnectionWithPort,
+            Builders.ConnectionWithSeeds, Builders.ConnectionWithReadPreference {
 		private final String _name;
 		private String _hostname;
 		private int _port = -1;
-		public Connection(String name) {
+        private List<ServerAddress> _seeds;
+        private ReadPreference _readPreference;
+
+        public Connection(String name) {
 			_name = name;
 		}
 		public Builders.ConnectionWithHost host(String hostname) {
@@ -148,12 +156,24 @@ public final class BuilderImpls {
 			_port = port;
 			return this;
 		}
+        public Builders.ConnectionWithSeeds seeds(List<ServerAddress> seeds) {
+            _seeds = seeds;
+            return this;
+        }
+        public Builders.ConnectionWithReadPreference readPreference(ReadPreference readPreference) {
+            _readPreference = readPreference;
+            return this;
+        }
 		public void configure(Binder binder) {
 			GuiceyMongoBinder guiceyBinder = new GuiceyMongoBinder(binder.skipSources(Connection.class));
 			if (_hostname != null)
 				guiceyBinder.bindConnectionHostname(_name, _hostname);
 			if (_port != -1)
 				guiceyBinder.bindConnectionPort(_name, _port);
+            if (_seeds != null && !_seeds.isEmpty())
+                guiceyBinder.bindConnectionSeeds(_name, _seeds);
+            if (_readPreference != null)
+                guiceyBinder.bindConnectionReadPreference(_name, _readPreference);
 		}
 	}
 }

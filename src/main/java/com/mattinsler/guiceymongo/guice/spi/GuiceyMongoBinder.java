@@ -21,7 +21,10 @@ import com.google.inject.Key;
 import com.google.inject.Module;
 import com.mattinsler.guiceymongo.guice.GuiceyMongoUtil;
 import com.mattinsler.guiceytools.ConfigureOnceModule;
+import com.mongodb.ReadPreference;
+import com.mongodb.ServerAddress;
 
+import java.util.List;
 import java.util.Map;
 
 public class GuiceyMongoBinder {
@@ -47,27 +50,35 @@ public class GuiceyMongoBinder {
 	public void bindConnectionPort(String connectionKey, int port) {
 		_binder.bind(Key.get(int.class, AnnotationUtil.configuredConnectionPort(connectionKey))).toInstance(port);
 	}
+
+    public void bindConnectionSeeds(String connectionKey, List<ServerAddress> seeds) {
+        _binder.bind(Key.get(List.class, AnnotationUtil.configuredConnectionSeeds(connectionKey))).toInstance(seeds);
+    }
+
+    public void bindConnectionReadPreference(String connectionKey, ReadPreference readPreference) {
+        _binder.bind(Key.get(ReadPreference.class, AnnotationUtil.configuredConnectionReadPreference(connectionKey))).toInstance(readPreference);
+    }
 	
 	public void bindConfiguredDatabase(String configurationName, String databaseKey, String database) {
 		_binder.install(new DBProviderModule(databaseKey));
 		_binder.bind(Key.get(String.class, AnnotationUtil.configuredDatabase(configurationName, databaseKey))).toInstance(database);
 	}
-	
+
 	public void bindConfiguredDatabaseConnection(String configurationName, String databaseKey, String connectionKey) {
 		_binder.bind(Key.get(String.class, AnnotationUtil.configuredDatabaseConnection(configurationName, databaseKey))).toInstance(connectionKey);
 	}
-	
+
 	public void bindConfiguredCollection(String configurationName, String databaseKey, String collectionKey, String collection) {
 		_binder.install(new CollectionProviderModule(databaseKey, collectionKey));
 		_binder.bind(Key.get(String.class, AnnotationUtil.configuredCollection(configurationName, collectionKey))).toInstance(collection);
 	}
-	
+
 	public void bindConfiguredBucket(String configurationName, String databaseKey, String bucketKey, String bucket) {
 		_binder.install(new GridFSProviderModule(databaseKey, bucketKey));
 		_binder.install(new BucketProviderModule(bucketKey));
 		_binder.bind(Key.get(String.class, AnnotationUtil.configuredBucket(configurationName, bucketKey))).toInstance(bucket);
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public void bind(GuiceyMongoBindingCollector collector) {
 		if (collector.getErrors().size() > 0) {

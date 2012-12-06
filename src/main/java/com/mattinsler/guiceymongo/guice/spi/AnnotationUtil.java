@@ -47,7 +47,15 @@ final class AnnotationUtil {
 	public static ConfiguredConnection configuredConnectionPort(String connection) {
 		return Annotations.proxy(ConfiguredConnection.class, "connection", connection, "key", "port");
 	}
-	
+
+    public static ConfiguredConnection configuredConnectionSeeds(String connection) {
+        return Annotations.proxy(ConfiguredConnection.class, "connection", connection, "key", "seeds");
+    }
+
+    public static ConfiguredConnection configuredConnectionReadPreference(String connection) {
+        return Annotations.proxy(ConfiguredConnection.class, "connection", connection, "key", "readPreference");
+    }
+
 	public static ConfiguredDatabaseConnection configuredDatabaseConnection(String configuration, String databaseKey) {
 		return Annotations.proxy(ConfiguredDatabaseConnection.class, "configuration", configuration, "database", databaseKey);
 	}

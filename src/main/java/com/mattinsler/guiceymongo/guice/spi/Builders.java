@@ -18,6 +18,10 @@ package com.mattinsler.guiceymongo.guice.spi;
 
 import com.google.inject.Module;
 import com.mattinsler.guiceymongo.data.IsData;
+import com.mongodb.ReadPreference;
+import com.mongodb.ServerAddress;
+
+import java.util.List;
 
 public interface Builders {
 	public interface FinishableConfiguration extends Module {
@@ -57,6 +61,8 @@ public interface Builders {
 	public interface Connection {
 		ConnectionWithHost host(String hostname);
 		ConnectionWithPort port(int port);
+        ConnectionWithSeeds seeds(List<ServerAddress> port);
+        ConnectionWithReadPreference readPreference(ReadPreference readPreference);
 	}
 	public interface ConnectionWithHost extends Module {
 		Module port(int port);
@@ -64,4 +70,10 @@ public interface Builders {
 	public interface ConnectionWithPort extends Module {
 		Module host(String hostname);
 	}
+    public interface ConnectionWithSeeds extends Module {
+        Module readPreference(ReadPreference readPreference);
+    }
+    public interface ConnectionWithReadPreference extends Module {
+        Module seeds(List<ServerAddress> port);
+    }
 }
