@@ -20,6 +20,8 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Proxy;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,8 +31,6 @@ import com.google.inject.Injector;
 import com.google.inject.Key;
 import com.google.inject.Module;
 import com.google.inject.Provider;
-import com.google.inject.internal.Lists;
-import com.google.inject.internal.Maps;
 import com.mattinsler.guiceymongo.GuiceyMongoEvalException;
 import com.mattinsler.guiceymongo.annotation.ItemType;
 import com.mattinsler.guiceymongo.data.DataWrapper;
@@ -144,7 +144,7 @@ public class JavascriptProxy<T> implements Module, Provider<T> {
 		}
 		public List<T> convert(List<DBObject> value) {
 			try {
-				List<T> list = Lists.newArrayList();
+				List<T> list = new ArrayList<T>();
 				for (DBObject o : value)
 					list.add(_itemWrapper.convert(o));
 				return list;
@@ -183,7 +183,7 @@ public class JavascriptProxy<T> implements Module, Provider<T> {
 	private static class Handler<T> implements InvocationHandler {
 		private final DB _database;
 		private final Class<T> _proxyInterface;
-		private final Map<Method, Invocation> _invocations = Maps.newHashMap();
+		private final Map<Method, Invocation> _invocations = new HashMap<Method, Invocation>();
 		
 		public Handler(Class<T> proxyInterface, DB database) {
 			_proxyInterface = proxyInterface;

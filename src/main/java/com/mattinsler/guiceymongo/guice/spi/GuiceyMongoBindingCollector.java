@@ -16,21 +16,21 @@
 
 package com.mattinsler.guiceymongo.guice.spi;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import com.google.inject.Key;
 import com.google.inject.Module;
-import com.google.inject.internal.Lists;
-import com.google.inject.internal.Maps;
-import com.google.inject.internal.Sets;
 import com.mattinsler.guiceymongo.data.IsData;
 
 public class GuiceyMongoBindingCollector {
-	private final List<String> _errors = Lists.newArrayList();
-	private final Set<Module> _modules = Sets.newHashSet();
-	private final Map<Key<?>, Object> _instanceBindings = Maps.newHashMap();
+	private final List<String> _errors = new ArrayList<String>();
+	private final Set<Module> _modules = new HashSet<Module>();
+	private final Map<Key<?>, Object> _instanceBindings = new HashMap<Key<?>, Object>();
 	
 	public GuiceyMongoBindingCollector() {
 	}
