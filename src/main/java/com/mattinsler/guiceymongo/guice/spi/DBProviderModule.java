@@ -23,11 +23,10 @@ import com.google.inject.Key;
 import com.mattinsler.guiceymongo.GuiceyMongoException;
 import com.mattinsler.guiceymongo.guice.annotation.MongoDatabase;
 import com.mattinsler.guiceytools.ProviderModule;
-import com.mongodb.DB;
-import com.mongodb.Mongo;
-import com.mongodb.MongoException;
+import com.mongodb.*;
 
 import java.net.UnknownHostException;
+import java.util.List;
 import java.util.UUID;
 
 class DBProviderModule extends ProviderModule<DB> {
@@ -70,14 +69,29 @@ class DBProviderModule extends ProviderModule<DB> {
 		if (connectionKey != null) {
 			String hostname = getInstance(_injector, Key.get(String.class, AnnotationUtil.configuredConnectionHostname(connectionKey)));
 			Integer port = getInstance(_injector, Key.get(int.class, AnnotationUtil.configuredConnectionPort(connectionKey)));
+            List<ServerAddress> seeds = getInstance(_injector, Key.get(List.class, AnnotationUtil.configuredConnectionSeeds(connectionKey)));
+            ReadPreference readPreference = getInstance(_injector, Key.get(ReadPreference.class, AnnotationUtil.configuredConnectionReadPreference(connectionKey)));
 
-			if (hostname == null)
-				hostname = "localhost";
-			if (port == null)
-				return new Mongo(hostname);
-			return new Mongo(hostname, port.intValue());
+            if (seeds != null) {
+                if (readPreference == null) {
+                    return new MongoClient(seeds);
+                } else {
+                    MongoClientOptions options = new MongoClientOptions.Builder().readPreference(readPreference).build();
+                    return new MongoClient(seeds, options);
+                }
+            } else {
+                if (hostname == null) {
+                    hostname = "localhost";
+                }
+
+                if (port == null) {
+                    return new MongoClient(hostname);
+                } else {
+                    return new MongoClient(hostname, port.intValue());
+                }
+            }
 		}
-		return new Mongo();
+		return new MongoClient();
 	}
 
 	private void cacheDB() throws MongoException, UnknownHostException {

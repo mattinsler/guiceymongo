@@ -15,7 +15,8 @@
  */
 
 public final class Connections {
-	private Connections() {}
+    private Connections() {}
 	
 	public static final String Primary = "Primary";
+    public static final String ReplicaSet = "ReplicaSet";
 }
